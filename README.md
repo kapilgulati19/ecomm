@@ -1,2 +1,1 @@
-# ecomm
-Node js backend
+# Mern-Ecommerce
