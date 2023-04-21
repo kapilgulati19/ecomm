@@ -1,9 +1,12 @@
 const View = require("../models/viewModel");
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongodbId");
-
+const slugify = require("slugify");
 const createView = asyncHandler(async (req, res) => {
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const newView = await View.create(req.body);
     res.json(newView);
   } catch (error) {
@@ -14,6 +17,9 @@ const updateView = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const updatedView = await View.findByIdAndUpdate(id, req.body, {
       new: true,
     });

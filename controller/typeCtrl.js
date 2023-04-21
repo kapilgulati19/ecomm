@@ -1,9 +1,12 @@
 const Type = require("../models/typeModel");
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongodbId");
-
+const slugify = require("slugify");
 const createType = asyncHandler(async (req, res) => {
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const newType = await Type.create(req.body);
     res.json(newType);
   } catch (error) {
@@ -14,6 +17,9 @@ const updateType = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const updatedType = await Type.findByIdAndUpdate(id, req.body, {
       new: true,
     });

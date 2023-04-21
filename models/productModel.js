@@ -14,6 +14,10 @@ var productSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    short_description: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,
@@ -29,6 +33,18 @@ var productSchema = new mongoose.Schema(
     brand: {
       type: String,
       required: true,
+    },
+    type: {
+      type: String,
+      //required: true,
+    },
+    area: {
+      type: String,
+      //required: true,
+    },
+    view: {
+      type: String,
+      //required: true,
     },
     quantity: {
       type: Number,

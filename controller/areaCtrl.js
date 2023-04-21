@@ -1,9 +1,12 @@
 const Area = require("../models/areaModel");
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongodbId");
-
+const slugify = require("slugify");
 const createArea = asyncHandler(async (req, res) => {
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const newArea = await Area.create(req.body);
     res.json(newArea);
   } catch (error) {
@@ -14,6 +17,9 @@ const updateArea = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const updatedArea = await Area.findByIdAndUpdate(id, req.body, {
       new: true,
     });

@@ -9,6 +9,12 @@ var viewSchema = new mongoose.Schema(
       unique: true,
       index: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
   },
   {
     timestamps: true,

@@ -1,9 +1,12 @@
 const Brand = require("../models/brandModel");
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongodbId");
-
+const slugify = require("slugify");
 const createBrand = asyncHandler(async (req, res) => {
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const newBrand = await Brand.create(req.body);
     res.json(newBrand);
   } catch (error) {
@@ -14,6 +17,9 @@ const updateBrand = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
     const updatedBrand = await Brand.findByIdAndUpdate(id, req.body, {
       new: true,
     });
